@@ -7,13 +7,16 @@ class WaterOrderController < ApplicationController
   end
 
   def create
-
+    if WaterOrder.where(user: @current_user[:user],
+                        state: WaterOrder::PENDING).count >= 5
+      return render json: { error: 'You have 5 PENDING orders' },
+                    status: :forbidden
+    end
     data = water_order_params
     data[:user] = @current_user[:user]
     u = WaterOrder.create(data)
     render json: u
   end
-
 
 
   private
