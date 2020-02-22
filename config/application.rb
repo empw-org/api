@@ -27,7 +27,7 @@ module EmpwApi
     config.load_defaults 6.0
 
     # allow CORS
-    config.middleware.insert_before 0, 'Rack::Cors' do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
         resource '*', headers: :any, methods: %i[get post options]
