@@ -14,7 +14,6 @@ class Authenticate
   private
 
   def authenticate
-    puts 'authenticate user'
     user = User.find_by(@user.slice(:email, :phone_number))
     return user if user&.authenticate(@user[:password])
 
