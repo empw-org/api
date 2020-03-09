@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AuthenticateUser
+class Authenticate
   prepend SimpleCommand
 
   def initialize(user)
