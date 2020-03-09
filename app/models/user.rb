@@ -2,26 +2,24 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
+  include PasswordDigestRemover
 
-  field :name, type: String
-  field :email, type: String
+  field :name
+  field :email
   field :ssn, type: Integer
-  field :phone_number, type: String
+  field :phone_number
   field :salary, type: Integer
-  field :password_digest
   field :is_verified, default: false
+  field :password_digest
 
-  validates_presence_of :name, :email, :password_digest, :phone_number, :ssn, :salary
+  validates_presence_of :name, :email, :password_digest,
+                        :phone_number, :ssn, :salary
   validates_uniqueness_of :email, :ssn, :phone_number
-  validates :ssn, length: {is: 14}
-  validates :name, length: {in: 5..100}
+  validates :ssn, length: { is: 14 }
+  validates :name, length: { in: 5..100 }
+  validates :email, email: true
 
-  index({ssn: 1, phone_number: 1, email: 1}, {unique: true})
   has_secure_password
 
-  def as_json(options = {})
-    attrs = super(options)
-    attrs.delete("password_digest")
-    attrs
-  end
 end
+
