@@ -5,3 +5,17 @@ services:
     image: mongo
     ports:
     - 27017:27017/tcp
+
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+    env_file:
+      - twilio.env
+    depends_on:
+      - db
+volumes:
+  gem_cache:
