@@ -14,7 +14,10 @@ class AuthenticateApiRequest
   attr_reader :headers
 
   def user
-    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    if decoded_auth_token
+      @user ||= { user: User.find(decoded_auth_token[:_id]),
+                  type: decoded_auth_token[:type] }
+    end
     @user || errors.add(:token, 'Invalid token') && nil
   end
 

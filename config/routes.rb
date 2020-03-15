@@ -6,5 +6,5 @@ Rails.application.routes.draw do
     post 'login', to: 'users#login'
     post 'verify', to: 'users#verify'
   end
-  get 'test', to: 'users#test'
+  resources :water_order
 end

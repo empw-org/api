@@ -2,9 +2,12 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: %i[login signup verify]
   # POST /signup
   def signup
-    @user = User.create(user_params)
-    TwilioVerification.send_code_to(@user.phone_number) if @user.valid?
-    if @user.save
+    @user = User.new(user_params)
+    twilio_verification = nil
+    if @user.valid?
+      twilio_verification = TwilioVerification.send_code_to(@user.phone_number)
+    end
+    if twilio_verification && @user.save
       render json: { message: 'SMS Sent' }, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -28,7 +31,9 @@ class UsersController < ApplicationController
         user.is_verified = true
         user.save
       else # wrong verification token
-        return render json: { error: command.errors, message: 'Wrong verification code' }, status: :unauthorized
+        return render json: { error: command.errors,
+                              message: 'Wrong verification code' },
+                      status: :unauthorized
       end
       render json: { user: user,
                      message: 'verification successful',
