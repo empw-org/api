@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  wrap_parameters :user, include: User.attribute_names + [:password]
   skip_before_action :authenticate_request, only: %i[login signup verify]
   # POST /signup
   def signup
