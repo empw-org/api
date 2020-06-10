@@ -3,7 +3,7 @@ class WaterOrdersController < ApplicationController
 
   def index
     # return all the requests made by the logged in user
-    render json: WaterOrder.where(user: @authenticated_user[:user])
+    render json: @authenticated_user[:user].water_orders
   end
 
   def show
@@ -49,7 +49,7 @@ class WaterOrdersController < ApplicationController
   end
 
   def set_water_order
-    @water_order = WaterOrder.find_by(user: @authenticated_user[:user],
-                                      id: params[:id])
+    @water_order = @authenticated_user[:user]
+                   .water_orders.where(id: params[:id])
   end
 end
