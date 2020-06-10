@@ -17,9 +17,8 @@ class User
   validates_uniqueness_of :email, :ssn, :phone_number
   validates :ssn, length: { is: 14 }
   validates :name, length: { in: 5..100 }
+  validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true
 
   has_secure_password
-
 end
-
