@@ -8,7 +8,10 @@ class UsersController < ApplicationController
       twilio_verification = TwilioVerification.send_code_to(@user.phone_number)
     end
     if twilio_verification && @user.save
-      render json: { message: 'SMS Sent' }, status: :created
+      render json: { message: 'Registered Successfully. ' \
+                     'An SMS with verification code was sent to the number' },
+             status: :created
+      UserMailer.welcome_email(@user.id.to_s).deliver_later
     else
       render json: @user.errors, status: :unprocessable_entity
     end

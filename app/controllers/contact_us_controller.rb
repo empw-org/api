@@ -1,5 +1,5 @@
 class ContactUsController < ApplicationController
-  before_action :set_contact_us, only: %i[show update destroy]
+  before_action :set_contact_us, only: %i[show destroy]
   skip_before_action :authenticate_request, only: :create
 
   # GET /contact_us
@@ -17,9 +17,9 @@ class ContactUsController < ApplicationController
   # POST /contact_us
   def create
     @contact_us = ContactUs.new(contact_us_params)
-
     if @contact_us.save
       render json: @contact_us, status: :created, location: @contact_us
+      UserMailer.contact_us_email(@contact_us.id.to_s).deliver_later
     else
       render json: @contact_us.errors, status: :unprocessable_entity
     end
@@ -39,6 +39,6 @@ class ContactUsController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def contact_us_params
-    params.permit(:name, :email, :message, :from)
+    params.require(:contact_us).permit(:name, :email, :message, :from)
   end
 end
