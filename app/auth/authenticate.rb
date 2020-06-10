@@ -14,7 +14,8 @@ class Authenticate
   private
 
   def authenticate
-    user = User.find_by(@user.slice(:email, :phone_number))
+    user = User.or({ email: @user[:email] },
+                   { phone_number: @user[:phone_number] }).first
     return user if user&.authenticate(@user[:password])
 
     errors.add :user_authentication, 'invalid credentials'
