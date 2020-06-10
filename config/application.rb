@@ -34,5 +34,11 @@ module EmpwApi
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.active_job.queue_adapter = :sidekiq
+    config.action_mailer.delivery_method = :sendgrid_actionmailer
+    config.action_mailer.sendgrid_actionmailer_settings = {
+      api_key: ENV['SENDGRID_API_KEY'],
+      raise_delivery_errors: true
+    }
   end
 end
