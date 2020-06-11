@@ -3,16 +3,29 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <style>
+    .centered {
+      text-align: center;
+    }
+
     .signature {
-      margin-top: 30px;
+      margin-top: 50px;
+      color: #333;
+    }
+
+    .container {
+      border: 2px black solid;
+      border-radius: 5px;
+      padding: 20px;
     }
   </style>
 </head>
 
 <body>
-<div style="text-align: center;">
+<div class="container">
   <%= yield %>
-  <%= render 'layouts/signature' %>
+  <div class="signature centered">
+    <%= render 'layouts/signature' %>
+  </div>
 </div>
 </body>
 </html>
