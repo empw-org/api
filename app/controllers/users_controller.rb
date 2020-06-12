@@ -68,6 +68,11 @@ class UsersController < ApplicationController
     command = AuthenticateUser.call user_params
     user = command.result
     if command.success?
+      unless user.is_verified
+        return render json: { error: 'Please verify your account to login' },
+                      status: :unauthorized
+      end
+
       render json: { user: user, token: TokenMaker.for(user) }
     else
       render json: { error: command.errors }, status: :unauthorized
