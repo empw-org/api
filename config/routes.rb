@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     post 'login', to: 'users#login'
     patch 'verify', to: 'users#verify'
     get 'me', to: 'users#me'
+    post 'reset-password', to: 'password_reset#reset_password'
+    patch 'password', to: 'password_reset#change_password'
   end
-  resources :water_order
+  resources :water_orders
 end
