@@ -53,15 +53,14 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    pp params
-    params.permit(
-        :name,
-        :email,
-        :password,
-        :phone_number,
-        :ssn,
-        :salary
-    ).to_h
+    params.require(:user).permit(
+      :name,
+      :email,
+      :password,
+      :phone_number,
+      :ssn,
+      :salary
+    )
   end
 
   def authenticate
