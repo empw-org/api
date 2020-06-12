@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Authenticate
+class AuthenticateUser
   prepend SimpleCommand
 
   def initialize(user)
@@ -8,12 +8,6 @@ class Authenticate
   end
 
   def call
-    authenticate
-  end
-
-  private
-
-  def authenticate
     user = User.or({ email: @user[:email] },
                    { phone_number: @user[:phone_number] }).first
     return user if user&.authenticate(@user[:password])

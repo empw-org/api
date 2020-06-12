@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
   # POST /verify
   def verify
-    command = Authenticate.call user_params
+    command = AuthenticateUser.call user_params
     user = command.result
 
     if command.success?
@@ -62,7 +62,7 @@ class UsersController < ApplicationController
   end
 
   def authenticate
-    command = Authenticate.call user_params
+    command = AuthenticateUser.call user_params
     user = command.result
     if command.success?
       render json: { user: user, token: TokenMaker.for(user) }
