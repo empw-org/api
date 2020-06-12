@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   wrap_parameters :user, include: User.attribute_names + [:password]
   skip_before_action :authenticate_request, only: %i[login signup verify]
-  # POST /signup
+  # POST /users/signup
   def signup
     @user = User.new(user_params)
     twilio_verification = nil
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /login
+  # POST /users/login
   def login
     authenticate
   end
