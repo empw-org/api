@@ -27,20 +27,18 @@ class UsersController < ApplicationController
   def verify
     command = AuthenticateUser.call user_params
     user = command.result
-
     if command.success?
-      if TwilioVerification.correct_code?(user.phone_number,
-                                          params[:code])
-        # first time login: mark as verified
-        user.is_verified = true
-        user.save
+      if user.is_verified || TwilioVerification.correct_code?(user.phone_number,
+                                                              params[:code])
+        # already verified or first time login
+        # user.update is true if success (won't re-save if nothing changed)
+        user.update(is_verified: true)
       else # wrong verification token
-        return render json: { error: command.errors,
-                              message: 'Wrong verification code' },
+        return render json: { message: 'Wrong verification code' },
                       status: :unauthorized
       end
       render json: { user: user,
-                     message: 'verification successful',
+                     message: 'Verified successfully',
                      token: TokenMaker.for(user) }
     else
       render json: { error: command.errors }, status: :unauthorized
