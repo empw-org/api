@@ -6,20 +6,18 @@ class AuthenticateApiRequest
   end
 
   def call
-    user
+    user = decoded_auth_token && user_with_id(decoded_auth_token[:_id])
+    if user
+      @user = { user: user, type: decoded_auth_token[:type] }
+    else
+      errors.add(:token, 'Invalid token') unless errors.key? :token
+    end
+    @user
   end
 
   private
 
   attr_reader :headers
-
-  def user
-    if decoded_auth_token
-      @user ||= { user: User.find(decoded_auth_token[:_id]),
-                  type: decoded_auth_token[:type] }
-    end
-    @user || errors.add(:token, 'Invalid token') && nil
-  end
 
   def decoded_auth_token
     @decoded_auth_token ||= JsonWebToken.decode(http_auth_header)
@@ -32,5 +30,9 @@ class AuthenticateApiRequest
       errors.add(:token, 'Missing token')
     end
     nil
+  end
+
+  def user_with_id(id)
+    User.where(id: id).first
   end
 end
