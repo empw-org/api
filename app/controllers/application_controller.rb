@@ -7,10 +7,10 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_request
-    @authenticated_user = AuthenticateApiRequest.call(request.headers).result
-    return if @authenticated_user
+    command = AuthenticateApiRequest.call(request.headers)
+    return if (@authenticated_user = command.result)
 
-    render json: { error: 'Not Authorized' }, status: :unauthorized
+    render json: command.errors, status: :unauthorized
   end
 
 end
