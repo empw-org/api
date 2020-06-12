@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     post 'signup', to: 'users#signup'
     post 'login', to: 'users#login'
     patch 'verify', to: 'users#verify'
+    get 'me', to: 'users#me'
   end
   resources :water_order
 end

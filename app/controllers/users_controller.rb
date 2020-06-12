@@ -47,6 +47,11 @@ class UsersController < ApplicationController
     end
   end
 
+  # GET /users/me
+  def me
+    render json: @authenticated_user[:user]
+  end
+
   private
 
   def user_params
