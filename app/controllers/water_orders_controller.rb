@@ -50,6 +50,6 @@ class WaterOrdersController < ApplicationController
 
   def set_water_order
     @water_order = @authenticated_user[:user]
-                   .water_orders.where(id: params[:id])
+                   .water_orders.find(params[:id])
   end
 end
