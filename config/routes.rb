@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   scope '/users' do
     post 'signup', to: 'users#signup'
     post 'login', to: 'users#login'
-    post 'verify', to: 'users#verify'
+    patch 'verify', to: 'users#verify'
   end
   resources :water_order
 end

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     authenticate
   end
 
-  # POST /verify
+  # PATCH /verify
   def verify
     command = AuthenticateUser.call user_params
     user = command.result
