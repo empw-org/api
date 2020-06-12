@@ -12,7 +12,7 @@ class WaterOrder
   include Mongoid::Timestamps
   field :amount, type: Integer
   field :state, default: PENDING
-  belongs_to :user, class_name: 'User'
+  belongs_to :user
   validates_presence_of :amount, :state, :user_id
   validates :state, inclusion: { in: ORDER_STATES }
 
