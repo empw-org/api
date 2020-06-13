@@ -1,21 +1,41 @@
-version: '3'
+version: "3"
 
 services:
   db:
     image: mongo
-    ports:
-    - 27017:27017/tcp
 
-  web:
+  api:
     build: .
     ports:
-      - "3000:3000"
+      - 3000:3000
     volumes:
       - .:/usr/src/app
       - gem_cache:/gems
     env_file:
-      - twilio.env
+      - .env
     depends_on:
       - db
+    environment:
+      - MONGO_URL=db:27017
+      - REDIS_URL=redis://redis:6379/0
+    entrypoint: "./docker-entrypoint.sh"
+    command: bin/rails s -b 0.0.0.0
+
+  sidekiq:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - gem_cache:/gems
+    env_file:
+      - .env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    command: bundle exec sidekiq
+
+  redis:
+    image: redis:alpine
+
 volumes:
   gem_cache:
