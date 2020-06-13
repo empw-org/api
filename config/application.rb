@@ -40,5 +40,12 @@ module EmpwApi
       api_key: ENV['SENDGRID_API_KEY'],
       raise_delivery_errors: true
     }
+    config.after_initialize do
+      # Change driver log destination and/or level
+      Mongo::Logger.logger = Logger.new(STDERR).tap do |logger|
+        logger.level = Logger::INFO
+      end
+    end
+
   end
 end
