@@ -11,7 +11,7 @@ development:
     default:
       database: empw_api_development
       hosts:
-        - db:27017
+        - <%= ENV.fetch('MONGO_URL') { 'localhost:27017' } %>
       options:
         server_selection_timeout: 1
 
