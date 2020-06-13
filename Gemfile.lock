@@ -194,7 +194,7 @@ DEPENDENCIES
   mongoid (~> 7.0.5)
   puma (~> 4.3)
   rack-cors
-  rails (~> 6.0.2, >= 6.0.2.1)
+  rails (~> 6.0.3, >= 6.0.3.1)
   sendgrid-actionmailer
   sidekiq
   simple_command
