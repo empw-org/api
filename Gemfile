@@ -10,19 +10,19 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.1'
 # Use Puma as the app server
 gem 'puma', '~> 4.3'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.7'
+gem 'jbuilder'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'jwt'
 gem 'mongoid', '~> 7.0.5'
+gem 'mongoid-geospatial'
 gem 'sendgrid-actionmailer'
 gem 'sidekiq'
 gem 'simple_command'
 gem 'twilio-ruby'
-
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
