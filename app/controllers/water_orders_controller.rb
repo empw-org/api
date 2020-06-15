@@ -18,7 +18,14 @@ class WaterOrdersController < ApplicationController
 
     data = water_order_params
     data[:user] = @authenticated_user[:user]
-    render json: WaterOrder.create(data)
+    water_order = WaterOrder.new(data)
+
+    if water_order.save
+      WaterOrderJob::Pending.perform_later(water_order.id.to_s)
+      render json: water_order, status: :created
+    else
+      render json: water_order.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -34,7 +41,7 @@ class WaterOrdersController < ApplicationController
   private
 
   def water_order_params
-    params.require(:water_order).permit(:amount)
+    params.require(:water_order).permit(:amount, location: {})
   end
 
   def can_order_water?
@@ -49,7 +56,7 @@ class WaterOrdersController < ApplicationController
   end
 
   def set_water_order
-    @water_order = @authenticated_user[:user]
-                   .water_orders.find(params[:id])
+    @water_order = @authenticated_user[:user].water_orders
+                                             .find(params[:id])
   end
 end
