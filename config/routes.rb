@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  scope '/admins' do
+    post 'login', to: 'admins#login'
+  end
+
   scope '/users' do
     post 'signup', to: 'users#signup'
     post 'login', to: 'users#login'
