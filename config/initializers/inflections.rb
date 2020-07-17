@@ -4,7 +4,7 @@
 # are locale specific, and you may define rules for as many different
 # locales as you wish. All of these examples are active by default:
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.uncountable 'ContactUs'
+  inflect.uncountable "contact_us"
 end
 
 # These inflection rules are supported but not enabled by default:
