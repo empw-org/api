@@ -8,7 +8,7 @@ class WaterOrder
                   ON_ITS_WAY = 'ON_ITS_WAY',
                   DELIVERED = 'DELIVERED',
                   CANCELED = 'CANCELED'].freeze
-  MAX_PENDING_ORDERS = 5000
+  MAX_PENDING_ORDERS = 5
 
   include Mongoid::Document
   include Mongoid::Timestamps
