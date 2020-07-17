@@ -49,6 +49,6 @@ class PasswordResetController < ApplicationController
     }
     secret = generate_secret(user)
     token = JWT.encode(payload_with_exp, secret)
-    ENV['EMPW_RESET_PASSWORD_FRONTEND'] + "?token=#{token}"
+    "#{ENV['EMPW_RESET_PASSWORD_FRONTEND']}?token=#{token}"
   end
 end
