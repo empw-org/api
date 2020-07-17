@@ -4,6 +4,10 @@ class ApplicationController < ActionController::API
   before_action :authenticate_request
   attr_reader :authenticated_user
 
+  rescue_from CanCan::AccessDenied do
+    head :forbidden
+  end
+
   private
 
   def authenticate_request

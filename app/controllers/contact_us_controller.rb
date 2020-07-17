@@ -1,6 +1,7 @@
 class ContactUsController < ApplicationController
   before_action :set_contact_us, only: %i[show destroy]
   skip_before_action :authenticate_request, only: :create
+  load_and_authorize_resource
 
   # GET /contact_us
   def index
