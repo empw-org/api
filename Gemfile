@@ -15,6 +15,8 @@ gem 'jbuilder'
 gem 'redis'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'cancancan'
+gem 'cancancan-mongoid'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'jwt'
 gem 'mongoid', '~> 7.0.5'
