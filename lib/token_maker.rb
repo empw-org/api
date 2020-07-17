@@ -6,6 +6,3 @@ class TokenMaker
     end
   end
 end
-
-
-
