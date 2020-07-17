@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :water_orders
+
+  if Rails.env.development?
+    require 'sidekiq/web'
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   scope '/admins' do
     post 'login', to: 'admins#login'
   end
@@ -13,5 +19,4 @@ Rails.application.routes.draw do
     post 'reset-password', to: 'password_reset#reset_password'
     patch 'password', to: 'password_reset#change_password'
   end
-  resources :water_orders
 end
