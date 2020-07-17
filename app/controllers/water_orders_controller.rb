@@ -3,7 +3,7 @@ class WaterOrdersController < ApplicationController
 
   def index
     # return all the requests made by the logged in user
-    render json: @authenticated_user[:user].water_orders
+    render json: @authenticated_user.water_orders
   end
 
   def show
@@ -17,7 +17,7 @@ class WaterOrdersController < ApplicationController
     end
 
     data = water_order_params
-    data[:user] = @authenticated_user[:user]
+    data[:user] = @authenticated_user
     water_order = WaterOrder.new(data)
 
     if water_order.save
@@ -45,7 +45,7 @@ class WaterOrdersController < ApplicationController
   end
 
   def can_order_water?
-    pending_orders_count = WaterOrder.where(user: @authenticated_user[:user],
+    pending_orders_count = WaterOrder.where(user: @authenticated_user,
                                             state: WaterOrder::PENDING).count
     pending_orders_count < WaterOrder::MAX_PENDING_ORDERS
   end
@@ -56,7 +56,6 @@ class WaterOrdersController < ApplicationController
   end
 
   def set_water_order
-    @water_order = @authenticated_user[:user].water_orders
-                                             .find(params[:id])
+    @water_order = @authenticated_user.water_orders.find(params[:id])
   end
 end
