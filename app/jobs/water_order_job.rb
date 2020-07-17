@@ -8,7 +8,7 @@ class WaterOrderJob < ApplicationJob
   end
 
   class Pending < WaterOrderJob
-    def perform
+    def perform(_id)
       nearest_company = Company
                         .near_sphere(location: @water_order.location)
                         .limit(1).to_a.first
