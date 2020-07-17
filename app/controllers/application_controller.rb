@@ -13,4 +13,8 @@ class ApplicationController < ActionController::API
     render json: command.errors, status: :unauthorized
   end
 
+  def current_user
+    @authenticated_user
+  end
+
 end
