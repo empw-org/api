@@ -4,8 +4,12 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    can :create, ContactUs unless user.present?
+    can :create, ContactUs
+    if user.present?
+      can :create, WaterOrder
+      can [:read, :delete], WaterOrder, user_id: user.id
+    end
 
-    can :manage, ContactUs if user.is_a? Admin
+    can :manage, :all if user.is_a? Admin
   end
 end

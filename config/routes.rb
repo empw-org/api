@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
   resources :water_orders
+  resources :sensors
+  resources :consumption_reports
 
   if Rails.env.development?
     require 'sidekiq/web'
