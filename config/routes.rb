@@ -13,6 +13,10 @@ Rails.application.routes.draw do
     post 'login', to: 'admins#login'
   end
 
+  scope '/companies' do
+    post 'signup', to: 'companies#signup'
+  end
+
   scope '/users' do
     post 'signup', to: 'users#signup'
     post 'login', to: 'users#login'
