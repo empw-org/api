@@ -46,6 +46,5 @@ module EmpwApi
         logger.level = Logger::INFO
       end
     end
-
   end
 end

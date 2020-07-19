@@ -20,5 +20,4 @@ class ApplicationController < ActionController::API
   def current_user
     @authenticated_user
   end
-
 end

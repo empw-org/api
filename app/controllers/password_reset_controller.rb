@@ -27,9 +27,7 @@ class PasswordResetController < ApplicationController
     begin
       JWT.decode(token, secret_key, true)
       user.password = params[:password]
-      unless user.save
-        return render json: user.errors, status: :unprocessable_entity
-      end
+      return render json: user.errors, status: :unprocessable_entity unless user.save
     rescue JWT::ExpiredSignature, JWT::VerificationError
       return render json: { error: 'token expired' }, status: :unauthorized
     end

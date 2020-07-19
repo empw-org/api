@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin
   include Mongoid::Document
   include ActiveModel::SecurePassword
@@ -8,7 +10,6 @@ class Admin
 
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true, uniqueness: true
-
 
   has_secure_password
 end

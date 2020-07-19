@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AuthenticateApiRequest
   prepend SimpleCommand
 
@@ -21,11 +23,9 @@ class AuthenticateApiRequest
   end
 
   def http_auth_header
-    if headers['Authorization'].present?
-      return headers['Authorization'].split(' ').last
-    else
-      errors.add(:token, 'Missing token')
-    end
+    return headers['Authorization'].split(' ').last if headers['Authorization'].present?
+
+    errors.add(:token, 'Missing token')
     nil
   end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PasswordResetMailer < ApplicationMailer
   def password_reset_email(user_id, url)
     @user = User.find(user_id)

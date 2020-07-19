@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContactUs
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -6,7 +8,7 @@ class ContactUs
   field :name
   field :from
 
-  validates_presence_of :message, :email, :name, :from
+  validates :message, :email, :name, :from, presence: true
   validates :email, email: true
   validates :from, inclusion: { in: %w[WEB MOB],
                                 message: '%{value} must be either WEB or MOB' }

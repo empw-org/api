@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ContactUsController < ApplicationController
   before_action :set_contact_us, only: %i[show destroy]
   skip_before_action :authenticate_request, only: :create

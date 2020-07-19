@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WaterOrderJob < ApplicationJob
   queue_as :water_orders
   attr_reader :water_order
@@ -18,7 +20,6 @@ class WaterOrderJob < ApplicationJob
   end
 
   class ReadyForShipping < WaterOrderJob
-    def perform(*args)
-    end
+    def perform(*args); end
   end
 end

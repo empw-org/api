@@ -21,7 +21,7 @@ class WaterOrder
   belongs_to :user
   belongs_to :company, optional: true
 
-  validates_presence_of :amount, :state, :location, :user_id
+  validates :amount, :state, :location, :user_id, presence: true
   validates :state, inclusion: { in: ORDER_STATES }
   validates :location, location: true
 end

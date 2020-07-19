@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ConsumptionReport
   include Mongoid::Document
   include Mongoid::Timestamps::Created

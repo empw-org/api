@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WaterOrdersController < ApplicationController
   before_action :set_water_order, only: %i[show destroy]
 
@@ -12,9 +14,7 @@ class WaterOrdersController < ApplicationController
 
   def create
     e = "You can't have more than #{WaterOrder::MAX_PENDING_ORDERS} PENDING orders"
-    unless can_order_water?
-      return render json: { error: e }, status: :bad_request
-    end
+    return render json: { error: e }, status: :bad_request unless can_order_water?
 
     data = water_order_params
     data[:user] = @authenticated_user
@@ -36,7 +36,6 @@ class WaterOrdersController < ApplicationController
     @water_order.destroy
     render status: :no_content
   end
-
 
   private
 

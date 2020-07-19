@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -12,9 +14,9 @@ class User
   field :is_verified, default: false
   field :password_digest
 
-  validates_presence_of :name, :email, :password_digest,
-                        :phone_number, :ssn, :salary
-  validates_uniqueness_of :email, :ssn, :phone_number
+  validates :name, :email, :password_digest,
+            :phone_number, :ssn, :salary, presence: true
+  validates :email, :ssn, :phone_number, uniqueness: true
   validates :ssn, length: { is: 14 }
   validates :name, length: { in: 5..100 }
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true

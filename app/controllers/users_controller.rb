@@ -1,20 +1,19 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   wrap_parameters :user, include: User.attribute_names + [:password]
   skip_before_action :authenticate_request, only: %i[login signup verify]
   # POST /users/signup
   def signup
-    @user = User.new(user_params)
-    twilio_verification = nil
-    if @user.valid?
-      twilio_verification = TwilioVerification.send_code_to(@user.phone_number)
-    end
-    if twilio_verification && @user.save
-      render json: { message: 'Registered Successfully. ' \
-                     'An SMS with verification code was sent to the number' },
-             status: :created
-      UserMailer.welcome_email(@user.id.to_s).deliver_later
+    user = User.new(user_params)
+    twilio_verification = TwilioVerification.send_code_to(user.phone_number) if user.valid?
+    if twilio_verification && user.save
+      render json: {
+        message: 'Registered Successfully. An SMS with verification code was sent to the number'
+      }
+      UserMailer.welcome_email(user.id.to_s).deliver_later
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: user.errors, status: :unprocessable_entity
     end
   end
 

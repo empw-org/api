@@ -8,6 +8,7 @@
 class LocationValidator < ActiveModel::EachValidator
   def validate_each(record, _attribute, location)
     return if location.nil?
+
     error_message = lambda { |name, min, max|
       "Valid #{name} values are between #{min} and #{max}, both inclusive"
     }

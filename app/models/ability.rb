@@ -7,7 +7,7 @@ class Ability
     can :create, ContactUs
     if user.present?
       can :create, WaterOrder
-      can [:read, :delete], WaterOrder, user_id: user.id
+      can %i[read delete], WaterOrder, user_id: user.id
     end
 
     can :manage, :all if user.is_a? Admin

@@ -1,0 +1,12 @@
+# See https://docs.rubocop.org/rubocop/configuration
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+AllCops:
+  NewCops: enable
+  Exclude:
+    - 'Gemfile'
+    - 'bin/**/*'
+Metrics/MethodLength:
+  Max: 35

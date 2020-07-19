@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Company
   include Mongoid::Document
   include Mongoid::Timestamps
@@ -13,9 +15,9 @@ class Company
   field :location, type: Mongoid::Geospatial::Point, sphere: true
   # sphere: true sets the db index for this field
 
-  validates_presence_of :name, :email, :password_digest,
-                        :phone_number, :location
-  validates_uniqueness_of :email, :phone_number
+  validates :name, :email, :password_digest,
+            :phone_number, :location, presence: true
+  validates :email, :phone_number, uniqueness: true
   validates :name, length: { in: 5..100 }
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true
@@ -23,5 +25,4 @@ class Company
 
   has_many :water_orders
   has_secure_password
-
 end

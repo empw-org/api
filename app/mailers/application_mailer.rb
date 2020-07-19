@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationMailer < ActionMailer::Base
   default from: 'EMPW <empw.org@gmail.com>'
   layout 'mailer'

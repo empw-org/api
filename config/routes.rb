@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
   resources :water_orders

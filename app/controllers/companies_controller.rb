@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CompaniesController < ApplicationController
   wrap_parameters :company, include: Company.attribute_names + [:password]
   skip_before_action :authenticate_request, only: [:signup, :login]
