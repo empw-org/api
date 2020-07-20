@@ -9,7 +9,7 @@ class AuthenticateApiRequest
 
   def call
     unless (user = decoded_auth_token && find_user)
-      errors.add(:token, 'Invalid token') unless errors.key? :token
+      errors.add(:message, 'Invalid token') unless errors.key? :message
     end
     user
   end
@@ -25,7 +25,7 @@ class AuthenticateApiRequest
   def http_auth_header
     return headers['Authorization'].split(' ').last if headers['Authorization'].present?
 
-    errors.add(:token, 'Missing token')
+    errors.add(:message, 'Missing token')
     nil
   end
 
