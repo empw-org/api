@@ -22,7 +22,11 @@ class CompaniesController < ApplicationController
   def login
     command = AuthenticateLogin.call(company_params, Company)
     company = command.result
-    return render json: { company: company, token: TokenMaker.for(company) } if command.success? && company.is_approved
+    if command.success?
+      return render json: { company: company, token: TokenMaker.for(company) } if company.is_approved
+
+      command.errors.add(:message, 'Your account was not approved yet')
+    end
 
     render json: command.errors, status: :unauthorized
   end
