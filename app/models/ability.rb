@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     can :create, ContactUs
     can %i[login signup], Company
+    can %i[login signup], Transporter
 
     if user.is_a? User
       can :create, WaterOrder

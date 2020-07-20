@@ -10,30 +10,21 @@ class Transporter
   field :name
   field :email
   field :phone_number
+  field :address
   field :is_approved, default: false
   field :password_digest
   field :ssn, type: Integer
-  embeds_one :car
 
-  validates :name, :email, :phone_number, :password_digest, :ssn, :car, presence: true
+  validates :name, :email, :phone_number, :password_digest, :ssn, :car, :address, presence: true
   validates :email, :phone_number, :ssn, uniqueness: true
   validates :name, length: { in: 5..100 }
+  validates :address, length: { in: 10..100 }
   validates :ssn, length: { is: 14 }
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true
 
+  embeds_one :car
   has_many :water_orders
+
   has_secure_password
-end
-
-
-class Car
-  include Mongoid::Document
-  field :model
-  field :number
-  field :capacity, type: Integer
-
-  validates :model, :number, :capacity, presence: true
-
-  embedded_in :transporter
 end
