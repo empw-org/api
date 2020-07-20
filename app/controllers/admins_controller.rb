@@ -9,7 +9,7 @@ class AdminsController < ApplicationController
       render json: { message: 'Logged in successfully',
                      token: TokenMaker.for(admin) }
     else
-      render json: { error: 'Wrong email or password' },
+      render json: { message: 'Wrong email or password' },
              status: :unauthorized
     end
   end

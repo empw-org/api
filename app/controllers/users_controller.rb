@@ -40,7 +40,7 @@ class UsersController < ApplicationController
                      message: 'Verified successfully',
                      token: TokenMaker.for(user) }
     else
-      render json: { error: command.errors }, status: :unauthorized
+      render json: { messsage: command.errors }, status: :unauthorized
     end
   end
 
@@ -63,17 +63,17 @@ class UsersController < ApplicationController
   end
 
   def authenticate
-    command = AuthenticateUser.call user_params
+    command = AuthenticateUser.call(user_params, User)
     user = command.result
     if command.success?
       unless user.is_verified
-        return render json: { error: 'Please verify your account to login' },
+        return render json: { message: 'Please verify your account to login' },
                       status: :unauthorized
       end
 
       render json: { user: user, token: TokenMaker.for(user) }
     else
-      render json: { error: command.errors }, status: :unauthorized
+      render json: { message: command.errors }, status: :unauthorized
     end
   end
 end

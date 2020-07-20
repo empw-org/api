@@ -14,7 +14,7 @@ class WaterOrdersController < ApplicationController
 
   def create
     e = "You can't have more than #{WaterOrder::MAX_PENDING_ORDERS} PENDING orders"
-    return render json: { error: e }, status: :bad_request unless can_order_water?
+    return render json: { message: e }, status: :bad_request unless can_order_water?
 
     data = water_order_params
     data[:user] = @authenticated_user
@@ -30,7 +30,7 @@ class WaterOrdersController < ApplicationController
 
   def destroy
     unless can_delete_water_order?
-      return render json: { error: "You can't delete non pending order" },
+      return render json: { message: "You can't delete non pending order" },
                     status: :bad_request
     end
     @water_order.destroy
