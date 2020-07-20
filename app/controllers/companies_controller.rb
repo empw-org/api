@@ -27,4 +27,12 @@ class CompaniesController < ApplicationController
     render json: command.errors, status: :unauthorized
   end
 
+  def index
+    render json: Company.all
+  end
+
+  def approve
+    company = Company.find(params[:id])
+    render json: { message: 'company has been approved and can login' } if company&.update({ is_approved: true })
+  end
 end

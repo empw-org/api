@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :water_orders
   resources :sensors
   resources :consumption_reports
+  resources :companies
 
   if Rails.env.development?
     require 'sidekiq/web'
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
   scope '/companies' do
     post 'signup', to: 'companies#signup'
     post 'login', to: 'companies#login'
+    patch ':id/approve', to: 'companies#approve'
   end
 
   scope '/users' do
