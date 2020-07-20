@@ -19,12 +19,23 @@ class UsersController < ApplicationController
 
   # POST /users/login
   def login
-    authenticate
+    command = AuthenticateLogin.call(user_params, User)
+    user = command.result
+    if command.success?
+      unless user.is_verified
+        return render json: { message: 'Please verify your account to login' },
+                      status: :unauthorized
+      end
+
+      render json: { user: user, token: TokenMaker.for(user) }
+    else
+      render json: command.errors, status: :unauthorized
+    end
   end
 
   # PATCH /verify
   def verify
-    command = AuthenticateUser.call user_params
+    command = AuthenticateLogin.call(user_params, User)
     user = command.result
     if command.success?
       if user.is_verified || TwilioVerification.correct_code?(user.phone_number,
@@ -40,7 +51,7 @@ class UsersController < ApplicationController
                      message: 'Verified successfully',
                      token: TokenMaker.for(user) }
     else
-      render json: { messsage: command.errors }, status: :unauthorized
+      render json: command.errors, status: :unauthorized
     end
   end
 
@@ -60,20 +71,5 @@ class UsersController < ApplicationController
       :ssn,
       :salary
     )
-  end
-
-  def authenticate
-    command = AuthenticateUser.call(user_params, User)
-    user = command.result
-    if command.success?
-      unless user.is_verified
-        return render json: { message: 'Please verify your account to login' },
-                      status: :unauthorized
-      end
-
-      render json: { user: user, token: TokenMaker.for(user) }
-    else
-      render json: { message: command.errors }, status: :unauthorized
-    end
   end
 end
