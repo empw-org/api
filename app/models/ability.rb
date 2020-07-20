@@ -13,6 +13,7 @@ class Ability
     end
 
     if user.is_a? Company
+      can :read, WaterOrder, company_id: user.id
       can :mark_as_ready_for_shipping, WaterOrder,
           company_id: user.id, state: WaterOrder::ASSIGNED_TO_COMPANY
     end
