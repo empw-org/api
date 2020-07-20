@@ -79,10 +79,8 @@ GEM
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    i18n (1.8.3)
+    i18n (1.8.4)
       concurrent-ruby (~> 1.0)
-    jbuilder (2.10.0)
-      activesupport (>= 5.0.0)
     jwt (2.2.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -221,7 +219,6 @@ DEPENDENCIES
   cancancan
   cancancan-mongoid
   dotenv-rails
-  jbuilder
   jwt
   listen (>= 3.0.5, < 3.2)
   mongoid (~> 7.0.5)
