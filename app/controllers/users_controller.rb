@@ -43,16 +43,14 @@ class UsersController < ApplicationController
         # already verified or first time login
         # user.update is true if success (won't re-save if nothing changed)
         user.update(is_verified: true)
+        return render json: { user: user,
+                              message: 'Verified successfully',
+                              token: TokenMaker.for(user) }
       else # wrong verification token
-        return render json: { message: 'Wrong verification code' },
-                      status: :unauthorized
+        command.errors.add(:message, 'Wrong verification code')
       end
-      render json: { user: user,
-                     message: 'Verified successfully',
-                     token: TokenMaker.for(user) }
-    else
-      render json: command.errors, status: :unauthorized
     end
+    render json: command.errors, status: :unauthorized
   end
 
   # GET /users/me
