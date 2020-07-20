@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class WaterOrdersController < ApplicationController
-  before_action :set_water_order, only: %i[show destroy]
+  before_action :set_water_order, only: %i[show destroy mark_as_ready_for_shipping]
+  load_and_authorize_resource
 
   def index
     # return all the requests made by the logged in user
@@ -26,6 +27,14 @@ class WaterOrdersController < ApplicationController
     else
       render json: water_order.errors, status: :unprocessable_entity
     end
+  end
+
+  def mark_as_ready_for_shipping
+    if @water_order.update({ state: WaterOrder::READY_FOR_SHIPPING })
+      return render json: { message: 'request marked as ready for shipping' }
+    end
+
+    render json: @water_order.errors, status: :bad_request
   end
 
   def destroy

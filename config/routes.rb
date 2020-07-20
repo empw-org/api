@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  scope '/water_orders' do
+    patch ':id/ready_for_shipping', to: 'water_orders#mark_as_ready_for_shipping'
+  end
+
   scope '/admins' do
     post 'login', to: 'admins#login'
   end
