@@ -5,7 +5,7 @@ class Ability
 
   def initialize(user)
     can :create, ContactUs
-    if user.present?
+    can %i[login signup], Company
       can :create, WaterOrder
       can %i[read delete], WaterOrder, user_id: user.id
     end

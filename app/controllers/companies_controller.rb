@@ -3,6 +3,7 @@
 class CompaniesController < ApplicationController
   wrap_parameters :company, include: Company.attribute_names + [:password]
   skip_before_action :authenticate_request, only: %i[signup login]
+  load_and_authorize_resource
 
   def signup
     company = Company.new(company_params)
@@ -18,5 +19,12 @@ class CompaniesController < ApplicationController
     params.require(:company).permit(:name, :phone_number, :email, :password, location: {})
   end
 
-  def login; end
+  def login
+    command = AuthenticateLogin.call(company_params, Company)
+    company = command.result
+    return render json: { company: company, token: TokenMaker.for(company) } if command.success? && company.is_approved
+
+    render json: command.errors, status: :unauthorized
+  end
+
 end

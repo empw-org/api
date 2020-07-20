@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   scope '/companies' do
     post 'signup', to: 'companies#signup'
+    post 'login', to: 'companies#login'
   end
 
   scope '/users' do
