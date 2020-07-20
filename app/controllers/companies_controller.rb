@@ -37,6 +37,9 @@ class CompaniesController < ApplicationController
 
   def approve
     company = Company.find(params[:id])
-    render json: { message: 'company has been approved and can login' } if company&.update({ is_approved: true })
+    return render json: { message: 'Already approved' } if company.is_approved
+
+    render json: { message: 'company has been approved and can login' } if company.update({ is_approved: true })
+    CompanyMailer.approve_email(company.id.to_s).deliver_later
   end
 end
