@@ -22,6 +22,7 @@ class Company
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true
   validates :location,  location: true
+  validates :phone_number, phone: true
 
   has_many :water_orders
   has_secure_password
