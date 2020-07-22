@@ -22,6 +22,7 @@ class Transporter
   validates :ssn, length: { is: 14 }
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true
+  validates :phone_number, phone: true
 
   embeds_one :car
   has_many :water_orders

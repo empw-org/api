@@ -12,15 +12,21 @@ class TwilioVerification
 
   class << self
     def send_code_to(phone_number)
-      @client.verifications.create(to: phone_number, channel: 'sms').status
+      @client.verifications.create(to: eg(phone_number), channel: 'sms').status
     end
 
     def correct_code?(phone_number, code)
       @client.verification_checks
-             .create(to: phone_number, code: code)
+             .create(to: eg(phone_number), code: code)
              .status == 'approved'
     rescue Twilio::REST::RestError
       nil
+    end
+
+    private
+
+    def eg(phone_number)
+      "+2#{phone_number}"
     end
   end
 end

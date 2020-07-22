@@ -21,6 +21,7 @@ class User
   validates :name, length: { in: 5..100 }
   validates :password, presence: true, length: { in: 8..50 }, allow_nil: true
   validates :email, email: true
+  validates :phone_number, phone: true
 
   has_many :water_orders
   has_secure_password
