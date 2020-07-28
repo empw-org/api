@@ -4,7 +4,10 @@ class ConsumptionReport
   include Mongoid::Document
   include Mongoid::Timestamps::Created
 
-  field :water_level, type: Float
+  field :consumption, type: Float
+  field :date, type: Date
+
+  validates :consumption, numericality: true
 
   belongs_to :sensor
 end

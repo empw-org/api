@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
   resources :water_orders
   resources :sensors
+  resources :consumption_data
   resources :consumption_reports
   resources :companies
   resources :transporters

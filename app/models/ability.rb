@@ -5,6 +5,7 @@ class Ability
 
   def initialize(user)
     can :create, ContactUs
+    can :create, ConsumptionData
     can %i[login signup], Company
     can %i[login signup], Transporter
 

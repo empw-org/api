@@ -6,4 +6,5 @@ class Sensor
 
   belongs_to :user, optional: true
   has_many :consumption_report
+  has_many :consumption_data
 end

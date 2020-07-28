@@ -7,6 +7,7 @@
 # locales as you wish. All of these examples are active by default:
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.uncountable 'contact_us'
+  inflect.uncountable 'consumption_data'
 end
 
 # These inflection rules are supported but not enabled by default:

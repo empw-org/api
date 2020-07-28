@@ -1,19 +1,16 @@
 # frozen_string_literal: true
 
 class ConsumptionReportsController < ApplicationController
-  skip_before_action :authenticate_request, only: :create
+  load_and_authorize_resource
 
   def create
-    data = consumption_report_params
-    consumption_report = ConsumptionReport.new(data)
-    if consumption_report.save
-      render json: consumption_report, status: :created
-    else
-      render json: consumption_report.errors, status: :unprocessable_entity
-    end
+    ConsumptionReport.create(consumption_reports_params[:reports])
+    render status: :no_content
   end
 
-  def consumption_report_params
-    params.require(:consumption_report).permit(:water_level, :sensor_id)
+  private
+
+  def consumption_reports_params
+    params.permit(reports: %i[sensor_id date consumption])
   end
 end
