@@ -17,10 +17,6 @@ class CompaniesController < ApplicationController
     end
   end
 
-  def company_params
-    params.require(:company).permit(:name, :phone_number, :email, :password, location: {})
-  end
-
   def login
     command = AuthenticateLogin.call(company_params, Company)
     company = command.result
@@ -43,5 +39,11 @@ class CompaniesController < ApplicationController
 
     render json: { message: 'company has been approved and can login' } if company.update({ is_approved: true })
     CompanyMailer.approve_email(company.id.to_s).deliver_later
+  end
+
+  private
+
+  def company_params
+    params.require(:company).permit(:name, :phone_number, :email, :password, :maintenance, location: {})
   end
 end
