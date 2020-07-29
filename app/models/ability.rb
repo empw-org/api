@@ -17,9 +17,7 @@ class Ability
       can %i[read delete], WaterOrder, user_id: user.id
     end
 
-    if user.is_a? Transporter
-      can %i[show update], Transporter, _id: user.id
-    end
+    can %i[show update], Transporter, _id: user.id if user.is_a? Transporter
 
     if user.is_a? Company
       can :read, WaterOrder, company_id: user.id

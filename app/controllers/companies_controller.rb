@@ -41,7 +41,6 @@ class CompaniesController < ApplicationController
 
   # PATCH /company
   def update
-
     return render json: @authenticated_user if @authenticated_user.update(company_params)
 
     render json: @authenticated_user.errors, status: :unprocessable_entity

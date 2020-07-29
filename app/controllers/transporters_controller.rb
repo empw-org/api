@@ -33,7 +33,9 @@ class TransportersController < ApplicationController
   def approve
     return render json: { message: 'Already approved' } if @transporter.is_approved
 
-    render json: { message: 'Transporter has been approved and can login' } if @transporter.update({ is_approved: true })
+    if @transporter.update({ is_approved: true })
+      render json: { message: 'Transporter has been approved and can login' }
+    end
     TransporterMailer.approve_email(transporter.id.to_s).deliver_later
   end
 
