@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Car
   include Mongoid::Document
 

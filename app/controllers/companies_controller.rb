@@ -8,8 +8,8 @@ class CompaniesController < ApplicationController
   def signup
     company = Company.new(company_params)
     if company.save
-      render json: { 
-        message: "Registered Successfully. An admin will review your data then you can login." 
+      render json: {
+        message: 'Registered Successfully. An admin will review your data then you can login.'
       }
       CompanyMailer.signup_email(company.id.to_s).deliver_later
     else

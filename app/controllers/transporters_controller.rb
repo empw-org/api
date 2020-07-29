@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TransportersController < ApplicationController
   wrap_parameters :transporter, include: Transporter.attribute_names + %i[password car]
   before_action :set_transporter, only: %i[show update destroy]

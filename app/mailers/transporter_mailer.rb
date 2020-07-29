@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TransporterMailer < ApplicationMailer
   # frozen_string_literal: true
 
