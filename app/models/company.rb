@@ -10,7 +10,8 @@ class Company
   field :name
   field :email
   field :phone_number
-  field :is_approved, default: false
+  field :is_approved, type: Boolean, default: false
+  field :maintenance, type: Boolean, default: false
   field :password_digest
   field :location, type: Mongoid::Geospatial::Point, sphere: true
   # sphere: true sets the db index for this field

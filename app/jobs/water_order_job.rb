@@ -11,11 +11,14 @@ class WaterOrderJob < ApplicationJob
 
   class Pending < WaterOrderJob
     def perform(_id)
-      nearest_company = Company
-                        .near_sphere(location: @water_order.location)
-                        .limit(1).to_a.first
-      @water_order.update(company: nearest_company,
-                          state: WaterOrder::ASSIGNED_TO_COMPANY)
+      nearest_company = Company.where(maintenance: false)
+                               .near_sphere(location: @water_order.location)
+                               .limit(1).first
+      if nearest_company.nil?
+        WaterOrderJob::Pending.set(wait_until: Date.tomorrow).perform_later(@water_order.id.to_s)
+      else
+        @water_order.update(company: nearest_company, state: WaterOrder::ASSIGNED_TO_COMPANY)
+      end
     end
   end
 
