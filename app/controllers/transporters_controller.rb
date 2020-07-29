@@ -21,7 +21,9 @@ class TransportersController < ApplicationController
   def signup
     transporter = Transporter.new(transporter_params)
     if transporter.save
-      render json: transporter
+      render json: {
+        message: 'Registered Successfully. An admin will review your data then you can login.'
+      }
       TransporterMailer.signup_email(transporter.id.to_s).deliver_later
     else
       render json: transporter.errors, status: :unprocessable_entity
