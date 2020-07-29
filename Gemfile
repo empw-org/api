@@ -21,8 +21,10 @@ gem 'dotenv-rails', groups: %i[development test]
 gem 'jwt'
 gem 'mongoid', '~> 7.0.5'
 gem 'mongoid-geospatial'
+gem 'rack-attack'
 gem 'sendgrid-actionmailer'
 gem 'sidekiq'
+gem 'hiredis'
 gem 'simple_command'
 gem 'twilio-ruby'
 # Reduces boot times through caching; required in config/boot.rb
