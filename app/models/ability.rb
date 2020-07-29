@@ -13,6 +13,7 @@ class Ability
     if user.is_a? User
       can %i[show update], User, _id: user.id
       can :create, WaterOrder
+      can :read, ConsumptionReport
       can %i[read delete], WaterOrder, user_id: user.id
     end
 
