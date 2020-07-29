@@ -23,6 +23,7 @@ class User
   validates :email, email: true
   validates :phone_number, phone: true
 
+  has_one :sensor
   has_many :water_orders
   has_secure_password
 end
