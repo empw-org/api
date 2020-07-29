@@ -6,8 +6,11 @@ Rails.application.routes.draw do
   resources :sensors
   resources :consumption_data
   resources :consumption_reports
-  resources :companies
-  resources :transporters
+  resources :transporters, only: :index
+  resource :transporter
+  resources :companies, only: :index
+  resource :company
+  resource :user
 
   if Rails.env.development?
     require 'sidekiq/web'
@@ -38,7 +41,6 @@ Rails.application.routes.draw do
     post 'signup', to: 'users#signup'
     post 'login', to: 'users#login'
     patch 'verify', to: 'users#verify'
-    get 'me', to: 'users#me'
     post 'reset-password', to: 'password_reset#reset_password'
     patch 'password', to: 'password_reset#change_password'
   end

@@ -2,7 +2,7 @@
 
 class TransportersController < ApplicationController
   wrap_parameters :transporter, include: Transporter.attribute_names + %i[password car]
-  before_action :set_transporter, only: %i[show update destroy]
+  before_action :set_transporter, only: :approve
   skip_before_action :authenticate_request, only: %i[login signup]
   load_and_authorize_resource
 
@@ -31,10 +31,9 @@ class TransportersController < ApplicationController
   end
 
   def approve
-    transporter = Transporter.find(params[:id])
-    return render json: { message: 'Already approved' } if transporter.is_approved
+    return render json: { message: 'Already approved' } if @transporter.is_approved
 
-    render json: { message: 'Transporter has been approved and can login' } if transporter.update({ is_approved: true })
+    render json: { message: 'Transporter has been approved and can login' } if @transporter.update({ is_approved: true })
     TransporterMailer.approve_email(transporter.id.to_s).deliver_later
   end
 
@@ -45,34 +44,16 @@ class TransportersController < ApplicationController
     render json: @transporters
   end
 
-  # GET /transporters/1
+  # GET /transporter
   def show
-    render json: @transporter
+    render json: @authenticated_user
   end
 
-  # POST /transporters
-  def create
-    @transporter = Transporter.new(transporter_params)
-
-    if @transporter.save
-      render json: @transporter, status: :created, location: @transporter
-    else
-      render json: @transporter.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /transporters/1
+  # PATCH/PUT /transporter
   def update
-    if @transporter.update(transporter_params)
-      render json: @transporter
-    else
-      render json: @transporter.errors, status: :unprocessable_entity
-    end
-  end
+    return render json: @authenticated_user if @authenticated_user.update(transporter_params)
 
-  # DELETE /transporters/1
-  def destroy
-    @transporter.destroy
+    render json: @authenticated_user.errors, status: :unprocessable_entity
   end
 
   private

@@ -3,6 +3,8 @@
 class UsersController < ApplicationController
   wrap_parameters :user, include: User.attribute_names + [:password]
   skip_before_action :authenticate_request, only: %i[login signup verify]
+  load_and_authorize_resource
+
   # POST /users/signup
   def signup
     user = User.new(user_params)
@@ -53,9 +55,16 @@ class UsersController < ApplicationController
     render json: command.errors, status: :unauthorized
   end
 
-  # GET /users/me
-  def me
+  # GET /user
+  def show
     render json: @authenticated_user
+  end
+
+  # PATCH /user
+  def update
+    return render json: @authenticated_user if @authenticated_user.update(user_params)
+
+    render json: @authenticated_user.errors, status: :unprocessable_entity
   end
 
   private

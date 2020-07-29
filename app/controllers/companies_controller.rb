@@ -29,8 +29,22 @@ class CompaniesController < ApplicationController
     render json: command.errors, status: :unauthorized
   end
 
+  # GET /companies/
   def index
     render json: Company.all
+  end
+
+  # GET /company
+  def show
+    render json: @authenticated_user
+  end
+
+  # PATCH /company
+  def update
+
+    return render json: @authenticated_user if @authenticated_user.update(company_params)
+
+    render json: @authenticated_user.errors, status: :unprocessable_entity
   end
 
   def approve
