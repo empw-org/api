@@ -46,6 +46,11 @@ class WaterOrdersController < ApplicationController
     render status: :no_content
   end
 
+  def destroy_all
+    WaterOrder.destroy_all
+    render status: :no_content
+  end
+  
   private
 
   def water_order_params

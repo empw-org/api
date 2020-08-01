@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
   scope '/water_orders' do
     patch ':id/ready_for_shipping', to: 'water_orders#mark_as_ready_for_shipping'
+    post 'destroy_all', to: 'water_orders#destroy_all'
   end
 
   scope '/admins' do
