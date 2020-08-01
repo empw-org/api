@@ -19,6 +19,7 @@ class WaterOrder
   field :location, type: Mongoid::Geospatial::Point, sphere: true
 
   belongs_to :user
+  belongs_to :transporter, optional: true
   belongs_to :company, optional: true
 
   validates :amount, :state, :location, :user_id, presence: true
