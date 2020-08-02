@@ -8,10 +8,10 @@ class UsersController < ApplicationController
   # POST /users/signup
   def signup
     user = User.new(user_params)
-    twilio_verification = TwilioVerification.send_code_to(user.phone_number) if user.valid?
-    if twilio_verification && user.save
+    VerificationMessageJob.perform_later(user.phone_number) if user.valid?
+    if user.save
       render json: {
-        message: 'Registered Successfully. An SMS with verification code was sent to the number'
+        message: "Registered Successfully. An SMS with verification code will be sent to #{user.phone_number}"
       }
       UserMailer.welcome_email(user.id.to_s).deliver_later
     else
@@ -48,7 +48,8 @@ class UsersController < ApplicationController
         return render json: { user: user,
                               message: 'Verified successfully',
                               token: TokenMaker.for(user) }
-      else # wrong verification token
+      else
+        # wrong verification token
         command.errors.add(:message, 'Wrong verification code')
       end
     end
