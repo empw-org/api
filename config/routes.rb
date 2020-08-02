@@ -17,6 +17,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  mount ActionCable.server => '/cable'
+
   scope '/water_orders' do
     patch ':id/ready_for_shipping', to: 'water_orders#mark_as_ready_for_shipping'
     post 'destroy_all', to: 'water_orders#destroy_all'

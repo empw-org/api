@@ -23,6 +23,17 @@ class WaterOrderJob < ApplicationJob
   end
 
   class ReadyForShipping < WaterOrderJob
-    def perform(*args); end
+    def perform(_id)
+      puts 'READY-FOR-SHIPPING'
+      ActionCable.server.broadcast('transporters',
+                                   { type: 'water_order', data: @water_order })
+    end
+  end
+
+  class AssignTransporter < WaterOrderJob
+    def perform(_water_order_id, transporter_id)
+      transporter = Transporter.find(transporter_id)
+      @water_order.update(transporter: transporter, state: WaterOrder::ASSIGNED_TO_TRANSPORTER)
+    end
   end
 end

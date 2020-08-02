@@ -41,6 +41,8 @@ module EmpwApi
       api_key: ENV['SENDGRID_API_KEY'],
       raise_delivery_errors: true
     }
+    config.action_cable.disable_request_forgery_protection = true
+    config.action_cable.url = '/cable'
     config.after_initialize do
       # Change driver log destination and/or level
       Mongo::Logger.logger = Logger.new(STDERR).tap do |logger|

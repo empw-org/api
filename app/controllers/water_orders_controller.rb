@@ -31,9 +31,10 @@ class WaterOrdersController < ApplicationController
 
   def mark_as_ready_for_shipping
     if @water_order.update({ state: WaterOrder::READY_FOR_SHIPPING })
+      # send to all the online transporters
+      WaterOrderJob::ReadyForShipping.perform_later(@water_order.id.to_s)
       return render json: { message: 'request marked as ready for shipping' }
     end
-
     render json: @water_order.errors, status: :bad_request
   end
 
@@ -46,7 +47,7 @@ class WaterOrdersController < ApplicationController
     WaterOrder.destroy_all
     render status: :no_content
   end
-  
+
   private
 
   def water_order_params
