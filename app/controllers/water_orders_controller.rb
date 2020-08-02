@@ -38,10 +38,6 @@ class WaterOrdersController < ApplicationController
   end
 
   def destroy
-    unless can_delete_water_order?
-      return render json: { message: "You can't delete non pending order" },
-                    status: :bad_request
-    end
     @water_order.destroy
     render status: :no_content
   end
@@ -61,11 +57,6 @@ class WaterOrdersController < ApplicationController
     pending_orders_count = WaterOrder.where(user: @authenticated_user,
                                             state: WaterOrder::PENDING).count
     pending_orders_count < WaterOrder::MAX_PENDING_ORDERS
-  end
-
-  def can_delete_water_order?
-    # can delete an order iff it's pending
-    @water_order.state == WaterOrder::PENDING
   end
 
   def set_water_order
