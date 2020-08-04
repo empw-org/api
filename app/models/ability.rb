@@ -14,10 +14,15 @@ class Ability
       can %i[show update], User, _id: user.id
       can :create, WaterOrder
       can :read, ConsumptionReport
-      can %i[read destroy], WaterOrder, user_id: user.id, state: WaterOrder::PENDING
+      can :read, WaterOrder, user_id: user.id
+      can :destroy, WaterOrder, user_id: user.id, state: WaterOrder::PENDING
     end
 
-    can %i[show update], Transporter, _id: user.id if user.is_a? Transporter
+    if user.is_a? Transporter
+      can %i[show update], Transporter, _id: user.id
+      can :read, WaterOrder, transporter_id: user.id
+      can :read, WaterOrder, state: WaterOrder::READY_FOR_SHIPPING
+    end
 
     if user.is_a? Company
       can :read, WaterOrder, company_id: user.id

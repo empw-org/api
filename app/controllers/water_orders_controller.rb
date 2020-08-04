@@ -6,7 +6,7 @@ class WaterOrdersController < ApplicationController
 
   def index
     # return all the requests made by the logged in user
-    render json: @authenticated_user.water_orders
+    render json: WaterOrder.accessible_by(current_ability)
   end
 
   def show
