@@ -5,8 +5,9 @@ class WaterOrdersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    # return all the requests made by the logged in user
-    render json: WaterOrder.accessible_by(current_ability)
+    # return all the orders accessible_by the logged in user
+    @water_orders = WaterOrder.accessible_by(current_ability).to_a
+    render :index
   end
 
   def show
