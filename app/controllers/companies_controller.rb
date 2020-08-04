@@ -54,6 +54,22 @@ class CompaniesController < ApplicationController
     CompanyMailer.approve_email(company.id.to_s).deliver_later
   end
 
+  def statistics
+    aggregation_pipeline = [{ '$match': { company_id: @authenticated_user.id } },
+                            { '$group': {
+                              _id: { _id: '$company_id', state: '$state' },
+                              count: { '$sum': 1 }
+                            } },
+                            { '$project': {
+                              _id: false,
+                              state: '$_id.state',
+                              count: true
+                            } }]
+    water_orders = WaterOrder.collection.aggregate(aggregation_pipeline)
+
+    render json: water_orders
+  end
+
   private
 
   def company_params

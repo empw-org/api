@@ -21,7 +21,7 @@ class Ability
 
     if user.is_a? Company
       can :read, WaterOrder, company_id: user.id
-      can %i[update show], Company, _id: user.id
+      can %i[update show statistics], Company, _id: user.id
       can :mark_as_ready_for_shipping, WaterOrder,
           company_id: user.id, state: WaterOrder::ASSIGNED_TO_COMPANY
     end
