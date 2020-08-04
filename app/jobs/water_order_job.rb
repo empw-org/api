@@ -17,7 +17,11 @@ class WaterOrderJob < ApplicationJob
       if nearest_company.nil?
         WaterOrderJob::Pending.set(wait_until: Date.tomorrow).perform_later(@water_order.id.to_s)
       else
-        @water_order.update(company: nearest_company, state: WaterOrder::ASSIGNED_TO_COMPANY)
+        @water_order.company = nearest_company
+        @water_order.state = WaterOrder::ASSIGNED_TO_COMPANY
+        @water_order.distance = WaterOrderDistanceCalculator.calc(@water_order)
+        @water_order.cost = WaterOrderCostCalculator.calc(@water_order)
+        @water_order.save
       end
     end
   end

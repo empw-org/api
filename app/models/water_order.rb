@@ -17,6 +17,8 @@ class WaterOrder
   field :amount, type: Integer
   field :state, default: PENDING
   field :location, type: Mongoid::Geospatial::Point, sphere: true
+  field :cost, type: Hash
+  field :distance, type: Float
 
   belongs_to :user
   belongs_to :transporter, optional: true
