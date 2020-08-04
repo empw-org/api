@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     post 'signup', to: 'companies#signup'
     post 'login', to: 'companies#login'
     patch ':id/approve', to: 'companies#approve'
+  end
+
   scope '/company' do
     get 'statistics', to: 'companies#statistics'
   end
