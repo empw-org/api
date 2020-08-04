@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class VerificationMessageJob < ApplicationJob
   queue_as :verification_messages
 
