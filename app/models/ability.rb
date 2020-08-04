@@ -20,8 +20,8 @@ class Ability
 
     if user.is_a? Transporter
       can %i[show update], Transporter, _id: user.id
-      can :read, WaterOrder, transporter_id: user.id
-      can :read, WaterOrder, state: WaterOrder::READY_FOR_SHIPPING
+      can %i[read claim], WaterOrder, transporter_id: user.id
+      can %i[read claim], WaterOrder, state: WaterOrder::READY_FOR_SHIPPING
     end
 
     if user.is_a? Company

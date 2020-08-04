@@ -11,7 +11,7 @@ class WaterOrdersController < ApplicationController
   end
 
   def show
-    render json: @water_order
+    render @water_order
   end
 
   def create
@@ -28,6 +28,16 @@ class WaterOrdersController < ApplicationController
     else
       render json: water_order.errors, status: :unprocessable_entity
     end
+  end
+
+  # Transporter
+  # POST /water_orders/:id/claim
+  def claim
+    if @water_order.update({ state: WaterOrder::ASSIGNED_TO_TRANSPORTER, transporter_id: @authenticated_user.id })
+      return render json: @water_order
+    end
+
+    render json: @water_order.errors, status: :unprocessable_entity
   end
 
   def mark_as_ready_for_shipping
