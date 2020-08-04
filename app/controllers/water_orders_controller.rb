@@ -7,7 +7,7 @@ class WaterOrdersController < ApplicationController
   def index
     # return all the orders accessible_by the logged in user
     @water_orders = WaterOrder.accessible_by(current_ability).to_a
-    render :index
+    render template: 'water_orders/index.json'
   end
 
   def show
