@@ -36,7 +36,7 @@ class TransportersController < ApplicationController
     if @transporter.update({ is_approved: true })
       render json: { message: 'Transporter has been approved and can login' }
     end
-    TransporterMailer.approve_email(transporter.id.to_s).deliver_later
+    TransporterMailer.approve_email(@transporter.id.to_s).deliver_later
   end
 
   # GET /transporters
