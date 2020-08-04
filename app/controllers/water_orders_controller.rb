@@ -31,15 +31,37 @@ class WaterOrdersController < ApplicationController
   end
 
   # Transporter
-  # POST /water_orders/:id/claim
+  # PATCH /water_orders/:id/claim
   def claim
     if @water_order.update({ state: WaterOrder::ASSIGNED_TO_TRANSPORTER, transporter_id: @authenticated_user.id })
       return render json: @water_order
     end
 
-    render json: @water_order.errors, status: :unprocessable_entity
+    render json: @water_order.errors, status: :bad_request
   end
 
+  # Transporter
+  # PATCH /water_orders/:id/pick
+  def pick
+    if @water_order.update({ state: WaterOrder::ON_ITS_WAY })
+      return render json: @water_order
+    end
+
+    render json: @water_order.errors, status: :bad_request
+  end
+
+  # Transporter
+  # PATCH /water_orders/:id/deliver
+  def deliver
+    if @water_order.update({ state: WaterOrder::DELIVERED })
+      return render json: @water_order
+    end
+
+    render json: @water_order.errors, status: :bad_request
+  end
+
+  # Company
+  # PATCH /water_orders/:id/ready_for_shipping
   def mark_as_ready_for_shipping
     if @water_order.update({ state: WaterOrder::READY_FOR_SHIPPING })
       # send to all the online transporters
