@@ -3,10 +3,10 @@
 Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
   resources :water_orders
-  resources :sensors, only:  %i[index create destroy]
+  resources :sensors, only: %i[index create destroy]
   resources :consumption_data
   resources :consumption_reports
-  resources :transporters, only:  %i[index destroy]
+  resources :transporters, only: %i[index destroy]
   resource :transporter
   resources :companies, only: %i[index destroy]
   resource :company
@@ -45,6 +45,10 @@ Rails.application.routes.draw do
 
   scope '/company' do
     get 'statistics', to: 'companies#statistics'
+  end
+
+  scope '/transporter' do
+    get 'statistics', to: 'transporters#statistics'
   end
 
   scope '/users' do

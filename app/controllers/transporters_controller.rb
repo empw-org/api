@@ -54,7 +54,6 @@ class TransportersController < ApplicationController
     head :no_content
   end
 
-
   # GET /transporter
   def show
     render json: @authenticated_user
@@ -65,6 +64,23 @@ class TransportersController < ApplicationController
     return render json: @authenticated_user if @authenticated_user.update(transporter_params)
 
     render json: @authenticated_user.errors, status: :unprocessable_entity
+  end
+
+  # GET /transporter/statistics
+  def statistics
+    aggregation_pipeline = [
+      { "$match": { "state": 'DELIVERED', transporter_id: @authenticated_user.id } },
+      { "$group": {
+        _id: '$state',
+        total_delivered_water_orders: { '$sum': 1 },
+        total_traveled_distance: { '$sum': '$distance' },
+        total_earned_money: { '$sum': '$cost.delivery_cost' }
+      } },
+      { '$project': { _id: false } }
+    ]
+    water_orders = WaterOrder.collection.aggregate(aggregation_pipeline).first
+
+    render json: water_orders
   end
 
   private
