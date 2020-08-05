@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   resources :contact_us # TODO: add CSRF token
   resources :water_orders
-  resources :sensors
+  resources :sensors, only:  %i[index create destroy]
   resources :consumption_data
   resources :consumption_reports
   resources :transporters, only:  %i[index destroy]
