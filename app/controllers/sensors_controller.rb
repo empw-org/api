@@ -15,7 +15,6 @@ class SensorsController < ApplicationController
 
     render json: sensor.errors, status: :unprocessable_entity
   end
-  
 
   # DELETE /sensors/:id
   def destroy

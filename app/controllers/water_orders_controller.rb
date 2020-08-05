@@ -43,9 +43,7 @@ class WaterOrdersController < ApplicationController
   # Transporter
   # PATCH /water_orders/:id/pick
   def pick
-    if @water_order.update({ state: WaterOrder::ON_ITS_WAY })
-      return render json: @water_order
-    end
+    return render json: @water_order if @water_order.update({ state: WaterOrder::ON_ITS_WAY })
 
     render json: @water_order.errors, status: :bad_request
   end
@@ -53,9 +51,7 @@ class WaterOrdersController < ApplicationController
   # Transporter
   # PATCH /water_orders/:id/deliver
   def deliver
-    if @water_order.update({ state: WaterOrder::DELIVERED })
-      return render json: @water_order
-    end
+    return render json: @water_order if @water_order.update({ state: WaterOrder::DELIVERED })
 
     render json: @water_order.errors, status: :bad_request
   end
