@@ -73,12 +73,12 @@ class WaterOrdersController < ApplicationController
 
   def destroy
     @water_order.destroy
-    render status: :no_content
+    head :no_content
   end
 
   def destroy_all
     WaterOrder.destroy_all
-    render status: :no_content
+    head :no_content
   end
 
   private

@@ -5,7 +5,7 @@ class ConsumptionReportsController < ApplicationController
 
   def create
     ConsumptionReport.create(consumption_reports_params[:reports])
-    render status: :no_content
+    head :no_content
   end
 
   def index
