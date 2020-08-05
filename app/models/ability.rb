@@ -21,7 +21,7 @@ class Ability
     if user.is_a? Transporter
       can %i[show update], Transporter, _id: user.id
       can %i[read], WaterOrder, transporter_id: user.id
-      can %i[claim], WaterOrder, state: WaterOrder::READY_FOR_SHIPPING
+      can %i[read claim], WaterOrder, state: WaterOrder::READY_FOR_SHIPPING
       can %i[pick], WaterOrder, state: WaterOrder::ASSIGNED_TO_TRANSPORTER, transporter_id: user.id
       can %i[deliver], WaterOrder, state: WaterOrder::ON_ITS_WAY, transporter_id: user.id
     end
