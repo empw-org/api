@@ -39,12 +39,21 @@ class TransportersController < ApplicationController
     TransporterMailer.approve_email(@transporter.id.to_s).deliver_later
   end
 
+  # ADMIN
   # GET /transporters
   def index
     @transporters = Transporter.all
 
     render json: @transporters
   end
+
+  # ADMIN
+  # DELETE /transporters/:id
+  def destroy
+    @transporter.destroy
+    head :no_content
+  end
+
 
   # GET /transporter
   def show

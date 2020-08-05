@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   resources :sensors
   resources :consumption_data
   resources :consumption_reports
-  resources :transporters, only: :index
+  resources :transporters, only:  %i[index destroy]
   resource :transporter
-  resources :companies, only: :index
+  resources :companies, only: %i[index destroy]
   resource :company
   resource :user
 

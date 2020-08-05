@@ -29,9 +29,17 @@ class CompaniesController < ApplicationController
     render json: command.errors, status: :unauthorized
   end
 
+  # ADMIN
   # GET /companies/
   def index
     render json: Company.all
+  end
+
+  # ADMIN
+  # DELETE /companies/:id
+  def destroy
+    Company.find(params[:id]).destroy
+    head :no_content
   end
 
   # GET /company
