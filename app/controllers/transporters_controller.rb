@@ -68,8 +68,13 @@ class TransportersController < ApplicationController
 
   # GET /transporter/statistics
   def statistics
+    zero_delivered = {
+      total_delivered_water_orders: 0,
+      total_traveled_distance: 0,
+      total_earned_money: 0
+    }
     aggregation_pipeline = [
-      { "$match": { "state": 'DELIVERED', transporter_id: @authenticated_user.id } },
+      { "$match": { state: 'DELIVERED', transporter_id: @authenticated_user.id } },
       { "$group": {
         _id: '$state',
         total_delivered_water_orders: { '$sum': 1 },
@@ -80,7 +85,7 @@ class TransportersController < ApplicationController
     ]
     water_orders = WaterOrder.collection.aggregate(aggregation_pipeline).first
 
-    render json: water_orders
+    render json: water_orders || zero_delivered
   end
 
   private
