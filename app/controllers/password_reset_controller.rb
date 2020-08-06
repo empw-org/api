@@ -5,6 +5,9 @@ class PasswordResetController < ApplicationController
 
   # POST /users/reset-password
   def reset_password
+    render json: {
+      message: 'Please check your email for instructions on password reset'
+    }, status: :accepted
     user = User.where(email: params[:email]).first
     if user&.is_verified
       url = reset(user)
@@ -12,9 +15,6 @@ class PasswordResetController < ApplicationController
         .password_reset_email(user.id.to_s, url)
         .deliver_later
     end
-    render json: {
-      message: 'Please check your email for instructions on password reset'
-    }, status: :accepted
   end
 
   # PATCH /users/password
