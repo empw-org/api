@@ -34,7 +34,7 @@ class WaterOrdersController < ApplicationController
   # PATCH /water_orders/:id/claim
   def claim
     if @water_order.update({ state: WaterOrder::ASSIGNED_TO_TRANSPORTER, transporter_id: @authenticated_user.id })
-      return render json: @water_order
+      return render @water_order
     end
 
     render json: @water_order.errors, status: :bad_request
@@ -43,7 +43,7 @@ class WaterOrdersController < ApplicationController
   # Transporter
   # PATCH /water_orders/:id/pick
   def pick
-    return render json: @water_order if @water_order.update({ state: WaterOrder::ON_ITS_WAY })
+    return render @water_order if @water_order.update({ state: WaterOrder::ON_ITS_WAY })
 
     render json: @water_order.errors, status: :bad_request
   end
@@ -51,7 +51,7 @@ class WaterOrdersController < ApplicationController
   # Transporter
   # PATCH /water_orders/:id/deliver
   def deliver
-    return render json: @water_order if @water_order.update({ state: WaterOrder::DELIVERED })
+    return render @water_order if @water_order.update({ state: WaterOrder::DELIVERED })
 
     render json: @water_order.errors, status: :bad_request
   end
