@@ -90,6 +90,6 @@ class WaterOrdersController < ApplicationController
   end
 
   def set_water_order
-    @water_order = @authenticated_user.water_orders.find(params[:id])
+    @water_order = WaterOrder.accessible_by(current_ability).where(_id: params[:id]).first
   end
 end
