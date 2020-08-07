@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
   scope '/transporter' do
     get 'statistics', to: 'transporters#statistics'
+    patch 'image', to: 'transporters#update_image'
   end
 
   scope '/users' do

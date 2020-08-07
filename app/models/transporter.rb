@@ -11,6 +11,7 @@ class Transporter
   field :email
   field :phone_number
   field :address
+  field :image
   field :is_approved, default: false
   field :password_digest
   field :ssn, type: Integer

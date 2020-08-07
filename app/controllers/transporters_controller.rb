@@ -66,6 +66,15 @@ class TransportersController < ApplicationController
     render json: @authenticated_user.errors, status: :unprocessable_entity
   end
 
+  # PATCH/PUT /transporter/image
+  def update_image
+    if params[:image].content_type.start_with? 'image/'
+      uploaded = Cloudinary::Uploader.upload(params[:image].tempfile)
+      return render json: @authenticated_user if @authenticated_user.update(image: uploaded['secure_url'])
+    end
+    render json: { message: 'Not a valid image' }, status: :bad_request
+  end
+
   # GET /transporter/statistics
   def statistics
     zero_delivered = {

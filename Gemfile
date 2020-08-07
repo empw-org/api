@@ -17,6 +17,7 @@ gem 'redis'
 gem 'bcrypt', '~> 3.1.7'
 gem 'cancancan'
 gem 'cancancan-mongoid'
+gem 'cloudinary'
 gem 'dotenv-rails', groups: %i[development test]
 gem 'jwt'
 gem 'mongoid', '~> 7.0.5'
