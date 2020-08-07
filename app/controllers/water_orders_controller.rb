@@ -33,6 +33,7 @@ class WaterOrdersController < ApplicationController
   # Transporter
   # PATCH /water_orders/:id/claim
   def claim
+    return render json: { message: 'You have un-delivered orders'}, status: :bad_request unless can_claim_water_order?
     if @water_order.update({ state: WaterOrder::ASSIGNED_TO_TRANSPORTER, transporter_id: @authenticated_user.id })
       return render @water_order
     end
@@ -81,6 +82,12 @@ class WaterOrdersController < ApplicationController
 
   def water_order_params
     params.require(:water_order).permit(:amount, location: {})
+  end
+
+  def can_claim_water_order?
+    # if there are no water orders assigned or on its way
+    @authenticated_user.water_orders.or({state: WaterOrder::ASSIGNED_TO_TRANSPORTER}, 
+      {state: WaterOrder::ON_ITS_WAY}).count == 0
   end
 
   def can_order_water?
