@@ -59,6 +59,14 @@ class TransportersController < ApplicationController
     render json: @authenticated_user
   end
 
+  # GET /transporter/current_water_order
+  def current_water_order
+    render @authenticated_user.water_orders.or(
+      { state: WaterOrder::ASSIGNED_TO_TRANSPORTER },
+      { state: WaterOrder::ON_ITS_WAY }
+    ).first
+  end
+
   # PATCH/PUT /transporter
   def update
     return render json: @authenticated_user if @authenticated_user.update(transporter_params)

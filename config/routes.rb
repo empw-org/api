@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   end
 
   scope '/transporter' do
+    get 'current_water_order', to: 'transporters#current_water_order'
     get 'statistics', to: 'transporters#statistics'
     patch 'image', to: 'transporters#update_image'
   end
