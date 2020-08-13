@@ -64,7 +64,7 @@ class TransportersController < ApplicationController
     render @authenticated_user.water_orders.or(
       { state: WaterOrder::ASSIGNED_TO_TRANSPORTER },
       { state: WaterOrder::ON_ITS_WAY }
-    ).first
+    ).first || { json: nil }
   end
 
   # PATCH/PUT /transporter
