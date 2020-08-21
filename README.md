@@ -31,18 +31,18 @@ docker-compose up
 
 ## Architecture
 
-![backend architecture](./images/backend.svg)
+<div align='center'>
+
+  ![backend architecture](./images/backend.svg)
+
+</div>
 
 ## 3rd parties
 
 EMPW wouldn't be possible without:
 
 <div align='center'>
-
-<img src="./images/twilio.svg" width='200px'/>  
-
-<img src="./images/sendgrid.svg" width='200px'/>  
-
-<img src="./images/cloudinary.svg" width='200px'/>  
-
+  <img src="./images/twilio.svg" width='200px'/>  
+  <img src="./images/sendgrid.svg" width='200px'/>  
+  <img src="./images/cloudinary.svg" width='200px'/>  
 </div>
